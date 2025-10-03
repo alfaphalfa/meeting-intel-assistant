@@ -1,7 +1,21 @@
 {
-  "name": "meeting-intel-assistant",
-  "version": "0.1.0",
+  "name": "netflix-meeting-intelligence",
+  "version": "1.0.0",
+  "description": "AI-Powered Meeting Analysis - Netflix PM Demo",
+  "author": "Kevin Andrews",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/meeting-intel-assistant"
+  },
+  "keywords": [
+    "meeting-analysis",
+    "ai",
+    "productivity",
+    "netflix",
+    "claude",
+    "genai"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -9,18 +23,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.65.0",
+    "lucide-react": "^0.544.0",
+    "next": "14.2.32",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.32"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.32",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "eslint": "^8",
-    "eslint-config-next": "14.2.32"
+    "typescript": "^5"
   }
 }
