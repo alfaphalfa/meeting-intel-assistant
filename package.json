@@ -1,7 +1,7 @@
 {
-  "name": "netflix-meeting-intelligence",
+  "name": "meeting-intelligence-assistant",
   "version": "1.0.0",
-  "description": "AI-Powered Meeting Analysis - Netflix PM Demo",
+  "description": "AI-Powered Meeting Analysis Assistant",
   "author": "Kevin Andrews",
   "private": true,
   "repository": {
@@ -12,7 +12,6 @@
     "meeting-analysis",
     "ai",
     "productivity",
-    "netflix",
     "claude",
     "genai"
   ],

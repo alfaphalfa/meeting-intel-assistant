@@ -5,7 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Meeting Intelligence Assistant - Netflix Demo",
+  title: "Meeting Intelligence Assistant",
   description: "AI-powered meeting intelligence assistant",
 };
 

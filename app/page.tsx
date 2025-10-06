@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { Loader2, Trash2, FileText } from "lucide-react";
 import MeetingResults from "@/components/MeetingResults";
-import DocQA from "@/components/DocQA";
 import MetricsDashboard from "@/components/MetricsDashboard";
 import { SAMPLE_MEETING } from "@/lib/sampleMeeting";
 
@@ -96,9 +95,6 @@ export default function Home() {
               <span className="text-white">Meeting Intelligence</span>{" "}
               <span className="text-netflix-red">Assistant</span>
             </h1>
-            <p className="text-lg sm:text-xl text-netflix-gray mt-3 font-light leading-relaxed">
-              AI-Powered Productivity Demo for Netflix
-            </p>
             <div className="mt-4 w-24 h-1 bg-gradient-to-r from-netflix-red via-netflix-red to-transparent mx-auto rounded-full"></div>
           </div>
         </div>
@@ -191,10 +187,6 @@ export default function Home() {
           </div>
         )}
 
-        {/* Doc QA Demo Section */}
-        <div className="mt-10">
-          <DocQA />
-        </div>
       </main>
 
       {/* Footer */}
@@ -206,7 +198,6 @@ export default function Home() {
               <span className="text-netflix-red">♥</span>{" "}
               by{" "}
               <span className="text-white font-medium">Kevin Andrews</span>
-              {" "}for the Product Manager - GenAI Position
             </p>
             <div className="mt-4 flex items-center justify-center gap-6">
               <a
