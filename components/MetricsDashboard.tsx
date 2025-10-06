@@ -16,13 +16,13 @@ export default function MetricsDashboard({
   const hours = Math.round((estimatedMinutes / 60) * 10) / 10; // Round to 1 decimal
 
   return (
-    <div className="bg-netflix-black border border-netflix-gray/30 rounded-lg p-6 sm:p-8 hover:border-netflix-gray/50 transition-all duration-300 animate-fade-in">
+    <div className="bg-notarai-dark border border-notarai-gray/30 rounded-lg p-6 sm:p-8 hover:border-notarai-gray/50 transition-all duration-300 animate-fade-in">
       {/* Header */}
       <div className="flex items-center gap-3 mb-6">
-        <TrendingUp className="w-6 h-6 text-netflix-red" />
+        <TrendingUp className="w-6 h-6 text-notarai-blue" />
         <div>
           <h2 className="text-2xl font-bold text-white">Your Impact</h2>
-          <p className="text-sm text-netflix-gray mt-1">
+          <p className="text-sm text-notarai-gray mt-1">
             Session analytics and time saved
           </p>
         </div>
@@ -31,12 +31,12 @@ export default function MetricsDashboard({
       {/* Metrics Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {/* Meetings Analyzed */}
-        <div className="bg-gradient-to-br from-netflix-red/10 to-netflix-red/5 border border-netflix-red/30 rounded-lg p-6 hover:border-netflix-red/50 hover:scale-105 transition-all duration-200">
+        <div className="bg-gradient-to-br from-notarai-blue/10 to-notarai-blue/5 border border-notarai-blue/30 rounded-lg p-6 hover:border-notarai-blue/50 hover:scale-105 transition-all duration-200">
           <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-netflix-red/20 rounded-lg">
-              <TrendingUp className="w-5 h-5 text-netflix-red" />
+            <div className="p-2 bg-notarai-blue/20 rounded-lg">
+              <TrendingUp className="w-5 h-5 text-notarai-blue" />
             </div>
-            <span className="text-sm font-medium text-netflix-gray">
+            <span className="text-sm font-medium text-notarai-gray">
               Meetings Analyzed
             </span>
           </div>
@@ -51,7 +51,7 @@ export default function MetricsDashboard({
             <div className="p-2 bg-blue-500/20 rounded-lg">
               <CheckSquare className="w-5 h-5 text-blue-400" />
             </div>
-            <span className="text-sm font-medium text-netflix-gray">
+            <span className="text-sm font-medium text-notarai-gray">
               Action Items Tracked
             </span>
           </div>
@@ -66,20 +66,20 @@ export default function MetricsDashboard({
             <div className="p-2 bg-green-500/20 rounded-lg">
               <Clock className="w-5 h-5 text-green-400" />
             </div>
-            <span className="text-sm font-medium text-netflix-gray">
+            <span className="text-sm font-medium text-notarai-gray">
               Time Saved
             </span>
           </div>
           <p className="text-4xl font-bold text-white">
             ~{hours.toLocaleString()}
-            <span className="text-xl text-netflix-gray ml-1">hrs</span>
+            <span className="text-xl text-notarai-gray ml-1">hrs</span>
           </p>
         </div>
       </div>
 
       {/* Footer Note */}
-      <div className="mt-6 pt-6 border-t border-netflix-gray/30">
-        <p className="text-xs text-netflix-gray text-center">
+      <div className="mt-6 pt-6 border-t border-notarai-gray/30">
+        <p className="text-xs text-notarai-gray text-center">
           💡 Estimated time saved based on 25 minutes per meeting summary
         </p>
       </div>

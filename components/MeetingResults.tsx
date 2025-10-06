@@ -181,7 +181,7 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
       <div className="flex justify-end">
         <button
           onClick={exportToMarkdown}
-          className="flex items-center gap-2 px-6 py-3 bg-netflix-red hover:bg-netflix-red/90 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-netflix-red/50"
+          className="flex items-center gap-2 px-6 py-3 bg-notarai-blue hover:bg-notarai-blue/90 text-white font-semibold rounded-xl transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-notarai-blue/50"
         >
           <Download className="w-5 h-5" />
           Export Analysis
@@ -189,7 +189,7 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
       </div>
 
       {/* Overview Card */}
-      <div className="bg-netflix-black border border-netflix-gray/30 rounded-lg p-6 hover:border-netflix-gray/50 transition-all duration-300">
+      <div className="bg-notarai-dark border border-notarai-gray/30 rounded-lg p-6 hover:border-notarai-gray/50 transition-all duration-300">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-white">Analysis Overview</h2>
         </div>
@@ -253,27 +253,27 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
       </div>
 
       {/* Key Decisions */}
-      <div className="bg-netflix-black border border-netflix-gray/30 rounded-lg overflow-hidden hover:border-netflix-gray/50 transition-all duration-300">
+      <div className="bg-notarai-dark border border-notarai-gray/30 rounded-lg overflow-hidden hover:border-notarai-gray/50 transition-all duration-300">
         <button
           onClick={() => toggleSection("decisions")}
-          className="w-full flex items-center justify-between p-6 hover:bg-netflix-gray/10 transition-all duration-200"
+          className="w-full flex items-center justify-between p-6 hover:bg-notarai-gray/10 transition-all duration-200"
         >
           <div className="flex items-center gap-3">
             <CheckCircle2 className="w-6 h-6 text-green-400" />
             <h2 className="text-xl font-bold text-white">Key Decisions</h2>
-            <span className="text-sm text-netflix-gray">
+            <span className="text-sm text-notarai-gray">
               ({results.keyDecisions.length})
             </span>
           </div>
           {expandedSections.decisions ? (
-            <ChevronUp className="w-5 h-5 text-netflix-gray" />
+            <ChevronUp className="w-5 h-5 text-notarai-gray" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-netflix-gray" />
+            <ChevronDown className="w-5 h-5 text-notarai-gray" />
           )}
         </button>
 
         {expandedSections.decisions && (
-          <div className="px-6 pb-6 border-t border-netflix-gray/30">
+          <div className="px-6 pb-6 border-t border-notarai-gray/30">
             {results.keyDecisions.length > 0 ? (
               <ul className="space-y-3 mt-4">
                 {results.keyDecisions.map((decision, index) => (
@@ -287,34 +287,34 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
                 ))}
               </ul>
             ) : (
-              <p className="text-netflix-gray mt-4">No decisions identified</p>
+              <p className="text-notarai-gray mt-4">No decisions identified</p>
             )}
           </div>
         )}
       </div>
 
       {/* Action Items */}
-      <div className="bg-netflix-black border border-netflix-gray/30 rounded-lg overflow-hidden">
+      <div className="bg-notarai-dark border border-notarai-gray/30 rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection("actions")}
-          className="w-full flex items-center justify-between p-6 hover:bg-netflix-gray/10 transition-colors"
+          className="w-full flex items-center justify-between p-6 hover:bg-notarai-gray/10 transition-colors"
         >
           <div className="flex items-center gap-3">
             <ClipboardList className="w-6 h-6 text-blue-400" />
             <h2 className="text-xl font-bold text-white">Action Items</h2>
-            <span className="text-sm text-netflix-gray">
+            <span className="text-sm text-notarai-gray">
               ({results.actionItems.length})
             </span>
           </div>
           {expandedSections.actions ? (
-            <ChevronUp className="w-5 h-5 text-netflix-gray" />
+            <ChevronUp className="w-5 h-5 text-notarai-gray" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-netflix-gray" />
+            <ChevronDown className="w-5 h-5 text-notarai-gray" />
           )}
         </button>
 
         {expandedSections.actions && (
-          <div className="px-6 pb-6 border-t border-netflix-gray/30">
+          <div className="px-6 pb-6 border-t border-notarai-gray/30">
             {results.actionItems.length > 0 ? (
               <div className="space-y-3 mt-4">
                 {results.actionItems.map((item, index) => (
@@ -344,34 +344,34 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
                 ))}
               </div>
             ) : (
-              <p className="text-netflix-gray mt-4">No action items identified</p>
+              <p className="text-notarai-gray mt-4">No action items identified</p>
             )}
           </div>
         )}
       </div>
 
       {/* Open Questions */}
-      <div className="bg-netflix-black border border-netflix-gray/30 rounded-lg overflow-hidden">
+      <div className="bg-notarai-dark border border-notarai-gray/30 rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection("questions")}
-          className="w-full flex items-center justify-between p-6 hover:bg-netflix-gray/10 transition-colors"
+          className="w-full flex items-center justify-between p-6 hover:bg-notarai-gray/10 transition-colors"
         >
           <div className="flex items-center gap-3">
             <HelpCircle className="w-6 h-6 text-orange-400" />
             <h2 className="text-xl font-bold text-white">Open Questions</h2>
-            <span className="text-sm text-netflix-gray">
+            <span className="text-sm text-notarai-gray">
               ({results.openQuestions.length})
             </span>
           </div>
           {expandedSections.questions ? (
-            <ChevronUp className="w-5 h-5 text-netflix-gray" />
+            <ChevronUp className="w-5 h-5 text-notarai-gray" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-netflix-gray" />
+            <ChevronDown className="w-5 h-5 text-notarai-gray" />
           )}
         </button>
 
         {expandedSections.questions && (
-          <div className="px-6 pb-6 border-t border-netflix-gray/30">
+          <div className="px-6 pb-6 border-t border-notarai-gray/30">
             {results.openQuestions.length > 0 ? (
               <ul className="space-y-3 mt-4">
                 {results.openQuestions.map((question, index) => (
@@ -385,7 +385,7 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
                 ))}
               </ul>
             ) : (
-              <p className="text-netflix-gray mt-4">
+              <p className="text-notarai-gray mt-4">
                 No open questions identified
               </p>
             )}
@@ -394,27 +394,27 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
       </div>
 
       {/* Risk Flags */}
-      <div className="bg-netflix-black border border-netflix-gray/30 rounded-lg overflow-hidden">
+      <div className="bg-notarai-dark border border-notarai-gray/30 rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection("risks")}
-          className="w-full flex items-center justify-between p-6 hover:bg-netflix-gray/10 transition-colors"
+          className="w-full flex items-center justify-between p-6 hover:bg-notarai-gray/10 transition-colors"
         >
           <div className="flex items-center gap-3">
             <AlertTriangle className="w-6 h-6 text-red-400" />
             <h2 className="text-xl font-bold text-white">Risk Flags</h2>
-            <span className="text-sm text-netflix-gray">
+            <span className="text-sm text-notarai-gray">
               ({results.riskFlags.length})
             </span>
           </div>
           {expandedSections.risks ? (
-            <ChevronUp className="w-5 h-5 text-netflix-gray" />
+            <ChevronUp className="w-5 h-5 text-notarai-gray" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-netflix-gray" />
+            <ChevronDown className="w-5 h-5 text-notarai-gray" />
           )}
         </button>
 
         {expandedSections.risks && (
-          <div className="px-6 pb-6 border-t border-netflix-gray/30">
+          <div className="px-6 pb-6 border-t border-notarai-gray/30">
             {results.riskFlags.length > 0 ? (
               <div className="space-y-3 mt-4">
                 {results.riskFlags.map((risk, index) => (
@@ -444,34 +444,34 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
                 ))}
               </div>
             ) : (
-              <p className="text-netflix-gray mt-4">No risks identified</p>
+              <p className="text-notarai-gray mt-4">No risks identified</p>
             )}
           </div>
         )}
       </div>
 
       {/* Next Steps */}
-      <div className="bg-netflix-black border border-netflix-gray/30 rounded-lg overflow-hidden">
+      <div className="bg-notarai-dark border border-notarai-gray/30 rounded-lg overflow-hidden">
         <button
           onClick={() => toggleSection("nextSteps")}
-          className="w-full flex items-center justify-between p-6 hover:bg-netflix-gray/10 transition-colors"
+          className="w-full flex items-center justify-between p-6 hover:bg-notarai-gray/10 transition-colors"
         >
           <div className="flex items-center gap-3">
             <ArrowRight className="w-6 h-6 text-purple-400" />
             <h2 className="text-xl font-bold text-white">Next Steps</h2>
-            <span className="text-sm text-netflix-gray">
+            <span className="text-sm text-notarai-gray">
               ({results.nextSteps.length})
             </span>
           </div>
           {expandedSections.nextSteps ? (
-            <ChevronUp className="w-5 h-5 text-netflix-gray" />
+            <ChevronUp className="w-5 h-5 text-notarai-gray" />
           ) : (
-            <ChevronDown className="w-5 h-5 text-netflix-gray" />
+            <ChevronDown className="w-5 h-5 text-notarai-gray" />
           )}
         </button>
 
         {expandedSections.nextSteps && (
-          <div className="px-6 pb-6 border-t border-netflix-gray/30">
+          <div className="px-6 pb-6 border-t border-notarai-gray/30">
             {results.nextSteps.length > 0 ? (
               <ul className="space-y-3 mt-4">
                 {results.nextSteps.map((step, index) => (
@@ -485,7 +485,7 @@ export default function MeetingResults({ results }: MeetingResultsProps) {
                 ))}
               </ul>
             ) : (
-              <p className="text-netflix-gray mt-4">No next steps identified</p>
+              <p className="text-notarai-gray mt-4">No next steps identified</p>
             )}
           </div>
         )}

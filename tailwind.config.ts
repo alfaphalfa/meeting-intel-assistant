@@ -11,10 +11,11 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
-        netflix: {
-          red: "#E50914",
-          black: "#141414",
-          gray: "#564d4d",
+        notarai: {
+          blue: "#2563eb",
+          "blue-dark": "#1e40af",
+          dark: "#141414",
+          gray: "#8a8a8a",
         },
       },
     },

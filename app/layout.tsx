@@ -5,8 +5,8 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Meeting Intelligence Assistant",
-  description: "AI-powered meeting intelligence assistant",
+  title: "notarai.work - Meeting Intelligence",
+  description: "AI-powered meeting notes analysis by notarai.work",
 };
 
 export default function RootLayout({
