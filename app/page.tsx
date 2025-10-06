@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Loader2, Trash2, FileText, Shield, Zap } from "lucide-react";
+import { Loader2, Trash2, FileText, Shield, Zap, Mic } from "lucide-react";
 import MeetingResults from "@/components/MeetingResults";
 import MetricsDashboard from "@/components/MetricsDashboard";
 import AuthModal from "@/components/AuthModal";
+import AudioUploader from "@/components/AudioUploader";
 import { SAMPLE_MEETING } from "@/lib/sampleMeeting";
 
 interface ActionItem {
@@ -41,6 +42,7 @@ export default function Home() {
   const [password, setPassword] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [remainingUses, setRemainingUses] = useState(5);
+  const [remainingTranscriptions, setRemainingTranscriptions] = useState(5);
 
   // Metrics tracking - initialized with demo numbers
   const [totalMeetings, setTotalMeetings] = useState(10);
@@ -64,9 +66,15 @@ export default function Home() {
     if (mode === "admin" && pwd) {
       setPassword(pwd);
       setRemainingUses(-1); // Unlimited
+      setRemainingTranscriptions(-1); // Unlimited
     } else {
       setRemainingUses(5); // Demo starts with 5
+      setRemainingTranscriptions(5); // Demo starts with 5 transcriptions
     }
+  };
+
+  const handleTranscriptionComplete = (text: string) => {
+    setMeetingText(text);
   };
 
   const analyzeMeeting = async () => {
@@ -147,7 +155,7 @@ export default function Home() {
           <div className="text-center relative">
             {/* Auth Status Badge */}
             {isAuthenticated && (
-              <div className="absolute top-0 right-0 flex items-center gap-2 px-4 py-2 bg-notarai-gray/10 border border-notarai-gray/30 rounded-lg">
+              <div className="absolute top-0 right-0 flex items-center gap-3 px-4 py-2 bg-notarai-gray/10 border border-notarai-gray/30 rounded-lg">
                 {authMode === "admin" ? (
                   <>
                     <Shield className="w-4 h-4 text-notarai-blue" />
@@ -158,9 +166,15 @@ export default function Home() {
                   <>
                     <Zap className="w-4 h-4 text-yellow-400" />
                     <span className="text-sm font-medium text-white">Demo</span>
-                    <span className={`text-xs font-bold ${remainingUses === 0 ? 'text-notarai-blue' : 'text-green-400'}`}>
-                      {remainingUses}/5 left
-                    </span>
+                    <div className="flex flex-col items-end gap-0.5">
+                      <span className={`text-xs font-bold ${remainingUses === 0 ? 'text-red-400' : 'text-green-400'}`}>
+                        Analyses: {remainingUses}/5
+                      </span>
+                      <span className={`text-xs font-bold ${remainingTranscriptions === 0 ? 'text-red-400' : 'text-blue-400'}`}>
+                        <Mic className="w-3 h-3 inline mr-0.5" />
+                        Transcriptions: {remainingTranscriptions}/5
+                      </span>
+                    </div>
                   </>
                 )}
               </div>
@@ -177,6 +191,16 @@ export default function Home() {
       </header>
 
       <main className="flex-1 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
+        {/* Audio Uploader Section */}
+        <AudioUploader
+          onTranscriptionComplete={handleTranscriptionComplete}
+          sessionId={sessionId}
+          password={password}
+          authMode={authMode}
+          remainingTranscriptions={remainingTranscriptions}
+          onUpdateRemainingTranscriptions={setRemainingTranscriptions}
+        />
+
         {/* Input Section */}
         <div className="bg-notarai-dark border border-notarai-gray/30 rounded-xl p-6 sm:p-8 mb-10 hover:border-notarai-gray/50 transition-all duration-300 shadow-xl">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-3">
