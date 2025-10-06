@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Loader2, Trash2, FileText } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Loader2, Trash2, FileText, Shield, Zap } from "lucide-react";
 import MeetingResults from "@/components/MeetingResults";
 import MetricsDashboard from "@/components/MetricsDashboard";
+import AuthModal from "@/components/AuthModal";
 import { SAMPLE_MEETING } from "@/lib/sampleMeeting";
 
 interface ActionItem {
@@ -24,6 +25,8 @@ interface AnalysisResult {
   openQuestions: string[];
   riskFlags: RiskFlag[];
   nextSteps: string[];
+  remainingUses?: number;
+  isAdmin?: boolean;
 }
 
 export default function Home() {
@@ -32,9 +35,39 @@ export default function Home() {
   const [results, setResults] = useState<AnalysisResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 
+  // Auth state
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [authMode, setAuthMode] = useState<"demo" | "admin">("demo");
+  const [password, setPassword] = useState<string | null>(null);
+  const [sessionId, setSessionId] = useState<string | null>(null);
+  const [remainingUses, setRemainingUses] = useState(5);
+
   // Metrics tracking - initialized with demo numbers
   const [totalMeetings, setTotalMeetings] = useState(10);
   const [totalActionItems, setTotalActionItems] = useState(45);
+
+  // Initialize or restore sessionId on mount
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      let storedSessionId = sessionStorage.getItem("meetingIntelSessionId");
+      if (!storedSessionId) {
+        storedSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        sessionStorage.setItem("meetingIntelSessionId", storedSessionId);
+      }
+      setSessionId(storedSessionId);
+    }
+  }, []);
+
+  const handleAuthComplete = (mode: "demo" | "admin", pwd?: string) => {
+    setAuthMode(mode);
+    setIsAuthenticated(true);
+    if (mode === "admin" && pwd) {
+      setPassword(pwd);
+      setRemainingUses(-1); // Unlimited
+    } else {
+      setRemainingUses(5); // Demo starts with 5
+    }
+  };
 
   const analyzeMeeting = async () => {
     if (!meetingText.trim()) {
@@ -47,12 +80,25 @@ export default function Home() {
     setResults(null);
 
     try {
+      const requestBody: {
+        meetingText: string;
+        sessionId?: string;
+        password?: string;
+      } = { meetingText };
+
+      // Add authentication credentials
+      if (authMode === "admin" && password) {
+        requestBody.password = password;
+      } else if (sessionId) {
+        requestBody.sessionId = sessionId;
+      }
+
       const response = await fetch("/api/analyze", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ meetingText }),
+        body: JSON.stringify(requestBody),
       });
 
       if (!response.ok) {
@@ -62,6 +108,11 @@ export default function Home() {
 
       const data = await response.json();
       setResults(data);
+
+      // Update remaining uses from API response
+      if (typeof data.remainingUses === "number") {
+        setRemainingUses(data.remainingUses);
+      }
 
       // Update metrics
       setTotalMeetings((prev) => prev + 1);
@@ -87,10 +138,34 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-netflix-black flex flex-col">
+      {/* Auth Modal */}
+      {!isAuthenticated && <AuthModal onAuthComplete={handleAuthComplete} />}
+
       {/* Header */}
       <header className="border-b border-netflix-gray/30 bg-netflix-black/95 backdrop-blur-md sticky top-0 z-50 shadow-lg">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
-          <div className="text-center">
+          <div className="text-center relative">
+            {/* Auth Status Badge */}
+            {isAuthenticated && (
+              <div className="absolute top-0 right-0 flex items-center gap-2 px-4 py-2 bg-netflix-gray/10 border border-netflix-gray/30 rounded-lg">
+                {authMode === "admin" ? (
+                  <>
+                    <Shield className="w-4 h-4 text-netflix-red" />
+                    <span className="text-sm font-medium text-white">Admin</span>
+                    <span className="text-xs text-netflix-gray">Unlimited</span>
+                  </>
+                ) : (
+                  <>
+                    <Zap className="w-4 h-4 text-yellow-400" />
+                    <span className="text-sm font-medium text-white">Demo</span>
+                    <span className={`text-xs font-bold ${remainingUses === 0 ? 'text-netflix-red' : 'text-green-400'}`}>
+                      {remainingUses}/5 left
+                    </span>
+                  </>
+                )}
+              </div>
+            )}
+
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-tight">
               <span className="text-white">Meeting Intelligence</span>{" "}
               <span className="text-netflix-red">Assistant</span>
@@ -148,7 +223,7 @@ export default function Home() {
           <div className="mt-6 flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
             <button
               onClick={analyzeMeeting}
-              disabled={isAnalyzing || !meetingText.trim()}
+              disabled={isAnalyzing || !meetingText.trim() || remainingUses === 0}
               className="w-full sm:w-auto px-10 py-4 bg-netflix-red hover:bg-netflix-red/90 text-white font-bold text-lg rounded-xl transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 hover:scale-105 disabled:hover:scale-100 shadow-xl hover:shadow-netflix-red/50"
             >
               {isAnalyzing ? (
@@ -162,7 +237,7 @@ export default function Home() {
             </button>
 
             <p className="text-xs text-netflix-gray">
-              AI-powered analysis takes 5-15 seconds
+              {remainingUses === 0 ? "Demo limit reached. Contact admin for password." : "AI-powered analysis takes 5-15 seconds"}
             </p>
           </div>
 

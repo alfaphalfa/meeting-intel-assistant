@@ -25,11 +25,61 @@ interface AnalysisResult {
   nextSteps: string[];
 }
 
+// In-memory session tracking (resets on server restart)
+interface SessionData {
+  usageCount: number;
+  createdAt: number;
+}
+
+const sessionStore = new Map<string, SessionData>();
+const DEMO_LIMIT = 5;
+
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     // Support both 'transcript' and 'meetingText' for backward compatibility
     const transcript = body.transcript || body.meetingText;
+    const { sessionId, password } = body;
+
+    // Authentication and rate limiting
+    let isAdmin = false;
+    let remainingUses = 0;
+
+    // Check if admin password provided
+    if (password) {
+      if (password === process.env.ADMIN_PASSWORD) {
+        isAdmin = true;
+        remainingUses = -1; // Unlimited
+      } else {
+        return NextResponse.json(
+          { error: "Invalid password" },
+          { status: 401 }
+        );
+      }
+    } else if (sessionId) {
+      // Demo mode - check session limits
+      const session = sessionStore.get(sessionId) || {
+        usageCount: 0,
+        createdAt: Date.now(),
+      };
+
+      if (session.usageCount >= DEMO_LIMIT) {
+        return NextResponse.json(
+          { error: "Demo limit reached. Please use admin password for unlimited access." },
+          { status: 429 }
+        );
+      }
+
+      // Increment usage
+      session.usageCount += 1;
+      sessionStore.set(sessionId, session);
+      remainingUses = DEMO_LIMIT - session.usageCount;
+    } else {
+      return NextResponse.json(
+        { error: "Authentication required. Please provide sessionId or password." },
+        { status: 401 }
+      );
+    }
 
     if (!transcript || typeof transcript !== "string") {
       return NextResponse.json(
@@ -119,7 +169,11 @@ Be specific and extract actual details from the meeting. If a category has no it
       nextSteps: Array.isArray(analysisResult.nextSteps) ? analysisResult.nextSteps : [],
     };
 
-    return NextResponse.json(validatedResult);
+    return NextResponse.json({
+      ...validatedResult,
+      remainingUses,
+      isAdmin,
+    });
   } catch (error) {
     console.error("Error analyzing meeting:", error);
 
